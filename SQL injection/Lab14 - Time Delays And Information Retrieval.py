@@ -10,9 +10,9 @@ from enum import Enum
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Target Data
-url = "https://0aa900ff04ce5ba3832c00430036007a.web-security-academy.net/"
-tracking_id = "CpBdngRbN7DohfGw"
-session = "1WsNM85StybN9qxDV0qwuI5K3qvoWR3Q"
+url = ""
+tracking_id = ""
+session = ""
 
 # Localhost Proxies (To intercept with Burp Suite)
 proxies = { 'http':'http://127.0.0.1:8080', 'https':'http://127.0.0.1:8080' }
