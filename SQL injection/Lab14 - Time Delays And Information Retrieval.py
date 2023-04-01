@@ -144,7 +144,7 @@ def main():
     time_delay = 5
     max_password_length = 25
     
-    bbdd_type = database(3) # get_database_type(time_delay)
+    bbdd_type = get_database_type(time_delay)
     password_length = get_password_length(bbdd_type, max_password_length, time_delay)
     get_password(bbdd_type, password_length, time_delay)
 
