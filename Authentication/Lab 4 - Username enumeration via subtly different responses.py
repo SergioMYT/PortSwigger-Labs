@@ -32,8 +32,8 @@ def main():
     user_name = ''
     password = ''
 
-    list_users = read_file('.\Authentication/usernames.txt')
-    list_passwords = read_file('.\Authentication/passwords.txt')
+    list_users = read_file('Authentication/usernames.txt')
+    list_passwords = read_file('Authentication/passwords.txt')
 
     print("\r(+) Forcing user name...")
     for user in list_users:
