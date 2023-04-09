@@ -13,3 +13,7 @@ https://portswigger.net/web-security
 - [Lab 1: Username enumeration via different responses.](./Authentication/Lab%201%20-%20Username%20enumeration.py)
 - [Lab 4: Username enumeration via subtly different responses.](./Authentication/Lab%204%20-%20Username%20enumeration%20via%20subtly%20different%20responses.py)
 - [Lab 5 - Username enumeration via response timing.](./Authentication/Lab%205%20-%20Username%20enumeration%20via%20response%20timing.py)
+- [Lab 6 - Broken brute-force protection, IP block.](./Authentication/Lab%206%20-%20Broken%20brute-force%20protection%2C%20IP%20block.py)
+- [Lab 7 - Username enumeration via account lock.](./Authentication/Lab%207%20-%20Username%20enumeration%20via%20account%20lock.py)
+- [Lab 7 - Username enumeration via account lock.](./Authentication/Lab%207%20-%20Username%20enumeration%20via%20account%20lock.py)
+- [Lab 8 - 2FA broken logic](./Authentication/Lab%208%20-%202FA%20broken%20logic.py)
